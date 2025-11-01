@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveBox — The Secret Between Us 36 🌙👀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL STYLES & VARIABLES --- */
+        :root {
+            --bg-color: #0d001a; /* Very deep dark purple/black */
+            --primary-color: #bb86fc; /* Deep purple highlight */
+            --secondary-color: #ff8c94; /* Soft pink for text/glow */
+            --white: #ffffff;
+            --font-elegant: 'Great Vibes', cursive;
+            --font-body: 'Poppins', sans-serif;
+            --transition-speed: 0.5s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff8c94" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--white);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND EFFECTS (Floating Moons/Stars/Sparkles) --- */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            opacity: 0.7;
+            text-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--primary-color);
+            animation: float-sparkle 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes float-sparkle {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translate(50px, -50px) rotate(180deg); opacity: 0.85; }
+            100% { transform: translate(-20px, 30px) rotate(360deg); opacity: 0.7; }
+        }
+
+        /* Initial positions for 6 stars */
+        .star:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 2rem; }
+        .star:nth-child(2) { top: 30%; right: 10%; animation-delay: 2s; font-size: 1.5rem; }
+        .star:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 4s; }
+        .star:nth-child(4) { bottom: 5%; right: 30%; animation-delay: 6s; font-size: 2.5rem; }
+        .star:nth-child(5) { top: 50%; left: 50%; animation-delay: 8s; }
+        .star:nth-child(6) { bottom: 40%; right: 5%; animation-delay: 10s; font-size: 1.8rem; }
+
+
+        /* --- SHARED COMPONENTS --- */
+        .container {
+            flex-grow: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .section {
+            min-height: 80vh;
+            display: none; /* Controlled by JavaScript */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 40px 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .section.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: var(--font-elegant);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: var(--white);
+        }
+
+        /* Glowing Button Style */
+        .glowing-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: var(--font-body);
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glowing-btn:hover {
+            background-color: var(--secondary-color);
+            box-shadow: 0 0 15px var(--secondary-color), 0 0 30px var(--secondary-color), 0 0 45px var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Floating heart animation on hover */
+        .glowing-btn:hover::before {
+            content: '❤️';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            animation: heart-float 1s ease-out;
+        }
+
+        @keyframes heart-float {
+            0% { opacity: 1; transform: translate(0, 0); }
+            100% { opacity: 0; transform: translate(15px, -30px); }
+        }
+
+        /* --- LANDING PAGE (HOME) --- */
+        #home-section .fade-in-message {
+            margin-top: 50px;
+            font-family: var(--font-elegant);
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            opacity: 0;
+            animation: fadeIn 2s ease-in 2s forwards;
+            text-shadow: 0 0 5px var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* --- QUIZ SECTION --- */
+        #quiz-section {
+            padding-top: 50px;
+        }
+
+        #quiz-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .question-container h3 {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .option-card {
+            display: block;
+            background: rgba(var(--primary-color-rgb, 187, 134, 252), 0.1); /* RGBA from primary color */
+            color: var(--white);
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary-color);
+            background: rgba(var(--primary-color-rgb, 187, 134, 252), 0.2);
+        }
+
+        /* Hide actual radio button */
+        .option-card input[type="radio"] {
+            display: none;
+        }
+
+        /* Style when option is selected */
+        .option-card input[type="radio"]:checked + span {
+            border-color: var(--secondary-color);
+            background: rgba(var(--secondary-color-rgb, 255, 140, 148), 0.3);
+            box-shadow: 0 0 8px var(--secondary-color);
+        }
+        
+        /* The span inside the label is what gets styled */
+        .option-card span {
+            display: block;
+            border-radius: 6px;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        #quiz-submit {
+            margin-top: 20px;
+        }
+
+        #quiz-result {
+            display: none;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+            margin-top: 30px;
+        }
+
+        /* --- FINAL SURPRISE PAGE --- */
+        #final-section .typing-container {
+            max-width: 700px;
+            min-height: 250px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        #typing-message {
+            font-family: var(--font-elegant);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--white);
+            line-height: 1.5;
+            min-height: 150px; /* Ensure container doesn't collapse */
+            display: inline-block;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: 3px solid var(--secondary-color);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        /* Typing cursor animation */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--secondary-color); }
+        }
+
+        #surprise-reveal {
+            display: none;
+            margin-top: 50px;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: auto; /* Pushes footer to the bottom */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- MEDIA QUERIES (Responsiveness) --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 1.2rem; }
+            .glowing-btn { padding: 12px 25px; font-size: 1rem; }
+            #quiz-form { padding: 20px; }
+            .question-container h3 { font-size: 1.1rem; }
+            .option-card { padding: 8px 10px; }
+            #final-section .typing-container { padding: 20px; }
+            #typing-message { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars">
+        <div class="star">✨</div>
+        <div class="star">🌙</div>
+        <div class="star">💖</div>
+        <div class="star">✨</div>
+        <div class="star">🌙</div>
+        <div class="star">💖</div>
+    </div>
+
+    <audio id="bg-music" loop autoplay>
+        Your browser does not support the audio element.
+    </audio>
+
+    <main class="container">
+        <section id="home-section" class="section active">
+            <h1>LoveBox — The Secret Between Us 36 🌙👀</h1>
+            <h2>A small piece of us, hidden in this **LoveBox**.</h2>
+            <button class="glowing-btn" onclick="nextSection('quiz-section')">Open the Box 💌</button>
+            <p class="fade-in-message">Made with love, by your secret keeper — **Siddhu** 💞</p>
+        </section>
+
+        <section id="quiz-section" class="section">
+            <h1>The Key to the LoveBox 🔑</h1>
+            <h2>Answer these fun questions to unlock our secret!</h2>
+            
+            <form id="quiz-form">
+                <div class="question-container">
+                    <h3>1. What do I do that melts you when I’m being flirty or naughty? 😉</h3>
+                    <label class="option-card"><input type="radio" name="q1" value="A" required><span>The unexpected wink</span></label>
+                    <label class="option-card"><input type="radio" name="q1" value="B"><span>The sudden soft whisper</span></label>
+                    <label class="option-card"><input type="radio" name="q1" value="C"><span>That playful smirk</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>2. Who usually says “I miss you” first?</h3>
+                    <label class="option-card"><input type="radio" name="q2" value="A" required><span>Me, of course!</span></label>
+                    <label class="option-card"><input type="radio" name="q2" value="B"><span>You, you're a softie</span></label>
+                    <label class="option-card"><input type="radio" name="q2" value="C"><span>It's a race, but usually me</span></label>
+                </div>
+                
+                <div class="question-container">
+                    <h3>3. What do our birthdates say about our connection? (Answer = Our type 💫)</h3>
+                    <label class="option-card"><input type="radio" name="q3" value="A" required><span>Fiery and passionate</span></label>
+                    <label class="option-card"><input type="radio" name="q3" value="B"><span>Calm and balanced</span></label>
+                    <label class="option-card"><input type="radio" name="q3" value="C"><span>Dreamy and inseparable</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>4. What one word describes us best?</h3>
+                    <label class="option-card"><input type="radio" name="q4" value="A" required><span>Destiny</span></label>
+                    <label class="option-card"><input type="radio" name="q4" value="B"><span>Home</span></label>
+                    <label class="option-card"><input type="radio" name="q4" value="C"><span>Adventure</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>5. If our story were a movie, what would the title be? 🎬</h3>
+                    <label class="option-card"><input type="radio" name="q5" value="A" required><span>36 Nights of Starlight</span></label>
+                    <label class="option-card"><input type="radio" name="q5" value="B"><span>Miles and Magic</span></label>
+                    <label class="option-card"><input type="radio" name="q5" value="C"><span>The Best Mistake</span></label>
+                </div>
+                
+                <div class="question-container">
+                    <h3>6. What’s the name I call you most often? 💞</h3>
+                    <label class="option-card"><input type="radio" name="q6" value="A" required><span>Sweetheart</span></label>
+                    <label class="option-card"><input type="radio" name="q6" value="B"><span>Babe</span></label>
+                    <label class="option-card"><input type="radio" name="q6" value="C"><span>My Love</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>7. What’s my hidden side — soft, bold, or mysterious? 🌙</h3>
+                    <label class="option-card"><input type="radio" name="q7" value="A" required><span>Soft</span></label>
+                    <label class="option-card"><input type="radio" name="q7" value="B"><span>Bold</span></label>
+                    <label class="option-card"><input type="radio" name="q7" value="C"><span>Mysterious</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>8. If you could meet me right now, what’s the first thing you’d do? 💋</h3>
+                    <label class="option-card"><input type="radio" name="q8" value="A" required><span>A huge, long hug</span></label>
+                    <label class="option-card"><input type="radio" name="q8" value="B"><span>Steal a kiss</span></label>
+                    <label class="option-card"><input type="radio" name="q8" value="C"><span>Just stare at you and smile</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>9. What’s our dream destination together? ✈️</h3>
+                    <label class="option-card"><input type="radio" name="q9" value="A" required><span>Paris</span></label>
+                    <label class="option-card"><input type="radio" name="q9" value="B"><span>A quiet beach</span></label>
+                    <label class="option-card"><input type="radio" name="q9" value="C"><span>The mountains</span></label>
+                </div>
+
+                <div class="question-container">
+                    <h3>10. Are you ready to open the secret of our LoveBox? 💌</h3>
+                    <label class="option-card"><input type="radio" name="q10" value="A" required><span>Absolutely, YES!</span></label>
+                    <label class="option-card"><input type="radio" name="q10" value="B"><span>My heart is ready!</span></label>
+                    <label class="option-card"><input type="radio" name="q10" value="C"><span>Let's do this!</span></label>
+                </div>
+
+                <button type="submit" id="quiz-submit" class="glowing-btn">Reveal Secret</button>
+            </form>
+
+            <div id="quiz-result">You’ve unlocked the Love Secret 💝</div>
+        </section>
+
+        <section id="final-section" class="section">
+            <div class="typing-container">
+                <span id="typing-message"></span>
+            </div>
+
+            <button id="reveal-surprise-btn" class="glowing-btn" style="display:none;">Tap to reveal one more surprise 💝</button>
+
+            <div id="surprise-reveal">
+                No matter how far, you’ll always be close — in my **LoveBox**.
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        Made with love for you — by your secret keeper, **Siddhu** 💌
+    </footer>
+
+    <script>
+        // Set the primary color for the option card background (used in CSS)
+        document.documentElement.style.setProperty('--primary-color-rgb', '187, 134, 252'); // RGB for #bb86fc
+        document.documentElement.style.setProperty('--secondary-color-rgb', '255, 140, 148'); // RGB for #ff8c94
+
+        /* --- SECTION MANAGEMENT --- */
+        function nextSection(nextId) {
+            const currentSection = document.querySelector('.section.active');
+            const nextSection = document.getElementById(nextId);
+
+            if (currentSection) {
+                currentSection.classList.remove('active');
+                currentSection.style.transform = 'translateY(-20px)';
+                currentSection.style.opacity = '0';
+            }
+
+            setTimeout(() => {
+                if (nextSection) {
+                    nextSection.classList.add('active');
+                    nextSection.style.transform = 'translateY(0)';
+                    nextSection.style.opacity = '1';
+                }
+            }, 500); // Wait for fade-out before showing next section
+        }
+
+        /* --- QUIZ INTERACTIVITY --- */
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Check if all questions are answered
+            const totalQuestions = 10;
+            let answeredCount = 0;
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                    answeredCount++;
+                }
+            }
+
+            if (answeredCount === totalQuestions) {
+                // Show result message and transition
+                document.getElementById('quiz-result').style.display = 'block';
+                document.getElementById('quiz-submit').style.display = 'none';
+
+                setTimeout(() => {
+                    nextSection('final-section');
+                    startTypingAnimation();
+                }, 2000); // 2 seconds delay to let the result sink in
+            } else {
+                alert('Please answer all the questions to unlock the secret!');
+            }
+        });
+
+
+        /* --- FINAL PAGE TYPING ANIMATION --- */
+        const secretMessage = `Even from miles away, you’re my calm and my chaos —
+my favorite part of every day.
+This LoveBox isn’t about perfection,
+it’s about ‘us’ — real, rare, and ours only. 💫`;
+        
+        const typingElement = document.getElementById('typing-message');
+        const revealBtn = document.getElementById('reveal-surprise-btn');
+
+        function startTypingAnimation() {
+            typingElement.innerHTML = '';
+            typingElement.style.borderRight = '3px solid var(--secondary-color)'; // Enable cursor
+            let i = 0;
+            
+            const typingInterval = setInterval(() => {
+                if (i < secretMessage.length) {
+                    typingElement.innerHTML += secretMessage.charAt(i).replace('\n', '<br>');
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                    typingElement.style.borderRight = 'none'; // Remove cursor
+                    revealBtn.style.display = 'block'; // Show final button
+                }
+            }, 60); // Speed of typing
+        }
+
+        /* --- FINAL SURPRISE REVEAL --- */
+        revealBtn.addEventListener('click', () => {
+            revealBtn.style.display = 'none';
+            document.getElementById('surprise-reveal').style.display = 'block';
+        });
+
+        /* --- AUDIO CONTROL (Optional) --- */
+        const music = document.getElementById('bg-music');
+        // This is a common pattern to handle browser autoplay policies.
+        // You might need a user gesture (like the "Open the Box" click) to start audio.
+        document.getElementById('home-section').querySelector('.glowing-btn').addEventListener('click', () => {
+            // Uncomment the next line if you add a music source and need to start it on click
+            // music.play().catch(e => console.log("Music play failed:", e)); 
+        });
+
+        // Loop through all option-cards to attach click handler for border glow
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    // Manually handle the style update for all sibling cards
+                    const parent = card.closest('.question-container');
+                    parent.querySelectorAll('.option-card span').forEach(span => {
+                        span.style.borderColor = 'transparent';
+                        span.style.background = 'rgba(var(--primary-color-rgb, 187, 134, 252), 0.1)';
+                        span.style.boxShadow = 'none';
+                    });
+                    
+                    // Apply style to the checked card's span
+                    card.querySelector('span').style.borderColor = 'var(--secondary-color)';
+                    card.querySelector('span').style.background = 'rgba(var(--secondary-color-rgb, 255, 140, 148), 0.3)';
+                    card.querySelector('span').style.boxShadow = '0 0 8px var(--secondary-color)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
